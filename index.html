@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIPJasa</title>
+  <!-- Memuat Tailwind CSS via CDN untuk tata letak dan utilitas responsif -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Memuat tipografi Plus Jakarta Sans dari Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            sip: {
+              navy: '#0f172a',
+              royal: '#1a66ff',
+              royalDark: '#004ce6',
+              gold: '#facc15',
+              goldDeep: '#eab308',
+              emerald: '#10b981',
+              bgTop: '#f4f8ff',
+            },
+          },
+          boxShadow: {
+            soft: '0 22px 48px -14px rgba(15, 23, 42, 0.12)',
+            card: '0 6px 24px -4px rgba(15, 23, 42, 0.05)',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Latar belakang gradien biru muda lembut (#f4f8ff) ke putih (#ffffff) */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(180deg, #f4f8ff 0%, #f8fbff 40%, #ffffff 100%);
+      color: #0f172a;
+    }
+
+    .hero-gradient-bg {
+      background:
+        radial-gradient(circle at 12% 16%, rgba(26, 102, 255, 0.08) 0%, rgba(244, 248, 255, 0) 46%),
+        radial-gradient(circle at 88% 12%, rgba(250, 204, 21, 0.14) 0%, rgba(244, 248, 255, 0) 42%),
+        linear-gradient(180deg, #f4f8ff 0%, #ffffff 100%);
+    }
+
+    /* Stabilo kuning keemasan (#facc15) di belakang frasa kunci */
+    .marker-gold {
+      display: inline-block;
+      background: linear-gradient(180deg, rgba(250, 204, 21, 0.22) 0%, rgba(250, 204, 21, 0.96) 14%, #facc15 100%);
+      color: #0f172a;
+      padding: 0.04em 0.36em 0.08em;
+      border-radius: 0.5rem;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    /* Animasi penanda panah pada akordion FAQ (<details>/<summary>) */
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    details[open] .faq-chevron {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-yellow-200 selection:text-[#0f172a] overflow-x-hidden">
+
+  <!-- 1. BILAH NAVIGASI ATAS BERSIH -->
+  <header class="sticky top-0 z-40 w-full bg-[#f4f8ff]/90 backdrop-blur-md border-b border-[#e2e8f0]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-[74px] gap-3">
+        <!-- Brand Mark SIPJasa -->
+        <a href="#top" class="flex items-center gap-3 group focus:outline-none shrink-0">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#facc15] border border-[#eab308]/50 flex items-center justify-center text-[#0f172a] shadow-2xs group-hover:bg-[#eab308] transition">
+            <!-- Ikon Rumah & Kunci Pas -->
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 10.5L12 3l9 7.5" />
+              <path d="M5 9.5V20a1 1 0 001 1h5.5" />
+              <path d="M19 9.5V13" />
+              <path d="M17.2 14.8a2.6 2.6 0 00-3.1 3.1l-2.6 2.6a1.1 1.1 0 001.6 1.6l2.6-2.6a2.6 2.6 0 003.1-3.1l-1.5 1.5-1.1-1.1 1.5-1.5z" />
+            </svg>
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="font-extrabold text-xl sm:text-[22px] tracking-tight">
+              <span class="text-[#0f172a]">SIP</span><span class="text-[#1a66ff]">Jasa</span>
+            </span>
+            <span class="text-[11px] sm:text-xs font-medium text-slate-500 hidden sm:block">
+              Sistem Informasi Pemesanan Jasa Rumah Tangga
+            </span>
+          </div>
+        </a>
+
+        <!-- Tautan Bagian Halaman -->
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-bold text-slate-700" aria-label="Navigasi Utama">
+          <a href="#layanan-inti" class="hover:text-[#1a66ff] transition">Layanan Inti</a>
+          <a href="#cara-kerja" class="hover:text-[#1a66ff] transition">Cara Kerja</a>
+          <a href="#keunggulan" class="hover:text-[#1a66ff] transition">Keunggulan</a>
+          <a href="#faq" class="hover:text-[#1a66ff] transition">FAQ</a>
+        </nav>
+
+        <!-- Tombol Menjelajah Profit Maximizer & Tripwire -->
+        <div class="flex items-center gap-2 shrink-0">
+          <a
+            href="#tripwire-info"
+            class="hidden sm:inline-flex items-center justify-center px-3.5 py-2 rounded-xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] text-[#0f172a] font-extrabold text-xs transition"
+          >
+            Promo Tripwire
+          </a>
+          <a
+            href="#profit-maximizer.html"
+            class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#1a66ff] hover:bg-[#004ce6] text-white font-extrabold text-xs sm:text-sm shadow-2xs transition"
+          >
+            <span>Profit Maximizer</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- 2. HERO SECTION CORE OFFER -->
+    <section class="hero-gradient-bg pt-10 pb-16 sm:pt-14 sm:pb-20 border-b border-[#e2e8f0]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-9 lg:gap-10 items-start">
+
+          <!-- Kolom Kiri (7 Kolom) -->
+          <div class="lg:col-span-7">
+            <!-- Badge Verifikasi Hijau Emerald -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-emerald-200 text-[#10b981] text-xs font-extrabold shadow-2xs mb-5">
+              <svg class="w-4 h-4 text-[#10b981] shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span>MITRA TERVERIFIKASI KTP &amp; DISETUJUI ADMIN SIPJASA</span>
+            </div>
+
+            <!-- Headline Utama -->
+            <h1 class="text-3xl sm:text-4xl lg:text-[43px] font-extrabold text-[#0f172a] leading-[1.16] tracking-tight">
+              Perawatan &amp; Perbaikan Rumah Tangga yang
+              <span class="marker-gold">Andal, Transparan &amp; Terverifikasi</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+              SIPJasa menghubungkan pemilik rumah dengan mitra profesional untuk <strong class="text-[#0f172a] font-bold">Servis AC, Kebersihan Rumah, Perbaikan Pipa &amp; Kran, Pertukangan &amp; Kelistrikan, Perawatan Taman, dan Cuci Sofa</strong> dengan acuan tarif awal yang jelas serta konfirmasi sebelum ada biaya tambahan.
+            </p>
+
+            <!-- Daftar 6 Layanan Inti Singkat -->
+            <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <div class="px-3.5 py-2.5 rounded-2xl bg-white border border-[#e2e8f0] text-xs font-extrabold text-[#0f172a] flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-[#1a66ff]"></span>
+                <span>Servis AC</span>
+              </div>
+              <div class="px-3.5 py-2.5 rounded-2xl bg-white border border-[#e2e8f0] text-xs font-extrabold text-[#0f172a] flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-[#1a66ff]"></span>
+                <span>Kebersihan Rumah</span>
+              </div>
+              <div class="px-3.5 py-2.5 rounded-2xl bg-white border border-[#e2e8f0] text-xs font-extrabold text-[#0f172a] flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-[#1a66ff]"></span>
+                <span>Perbaikan Pipa &amp; Kran</span>
+              </div>
+              <div class="px-3.5 py-2.5 rounded-2xl bg-white border border-[#e2e8f0] text-xs font-extrabold text-[#0f172a] flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-[#1a66ff]"></span>
+                <span>Pertukangan &amp; Kelistrikan</span>
+              </div>
+              <div class="px-3.5 py-2.5 rounded-2xl bg-white border border-[#e2e8f0] text-xs font-extrabold text-[#0f172a] flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-[#1a66ff]"></span>
+                <span>Perawatan Taman</span>
+              </div>
+              <div class="px-3.5 py-2.5 rounded-2xl bg-white border border-[#e2e8f0] text-xs font-extrabold text-[#0f172a] flex items-center gap-2 shadow-2xs">
+                <span class="w-2 h-2 rounded-full bg-[#1a66ff]"></span>
+                <span>Cuci Sofa</span>
+              </div>
+            </div>
+
+            <!-- Tautan Cepat ke Layanan Inti, Profit Maximizer & Tripwire -->
+            <div class="mt-7 flex flex-wrap items-center gap-3">
+              <a
+                href="#layanan-inti"
+                class="px-5 py-3.5 rounded-xl bg-[#1a66ff] hover:bg-[#004ce6] text-white font-extrabold text-xs sm:text-sm shadow-2xs transition"
+              >
+                Lihat Katalog Layanan Inti
+              </a>
+              <a
+                href="#profit-maximizer.html"
+                class="px-5 py-3.5 rounded-xl bg-[#facc15] hover:bg-[#eab308] text-[#0f172a] font-extrabold text-xs sm:text-sm transition"
+              >
+                Jelajahi Profit Maximizer &rarr;
+              </a>
+              <a
+                href="#tripwire-info"
+                class="px-4 py-3.5 rounded-xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] text-[#0f172a] font-bold text-xs sm:text-sm transition"
+              >
+                Opsi Tripwire
+              </a>
+            </div>
+          </div>
+
+          <!-- Kolom Kanan (5 Kolom): Kartu Ringkasan Standar Tarif & Kepercayaan -->
+          <div class="lg:col-span-5">
+            <div class="rounded-3xl bg-white border-2 border-[#0f172a] shadow-soft overflow-hidden">
+              <div class="px-5 py-3.5 bg-[#0f172a] text-white flex items-center justify-between gap-2">
+                <span class="text-xs font-bold tracking-wide flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#facc15]"></span>
+                  Standar Transparansi Core Offer
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-[#10b981] text-[11px] font-extrabold">
+                  TERVERIFIKASI
+                </span>
+              </div>
+
+              <div class="p-5 sm:p-6 space-y-4">
+                <div class="rounded-2xl bg-[#f4f8ff] border border-blue-100 p-4">
+                  <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#1a66ff] block">
+                    Acuan Tarif Dasar Jelas
+                  </span>
+                  <h2 class="text-lg sm:text-xl font-extrabold text-[#0f172a] mt-1">
+                    Harga Mulai Transparan Sebelum Pengerjaan
+                  </h2>
+                  <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
+                    Tarif dasar layanan tampil jelas sejak awal. Apabila diperlukan sparepart, isi freon, atau tambahan titik kerja, rinciannya diinformasikan terlebih dahulu sebelum dikerjakan.
+                  </p>
+                </div>
+
+                <div class="space-y-2.5 text-xs sm:text-sm text-slate-700">
+                  <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-[#e2e8f0]">
+                    <span class="text-[#10b981] font-extrabold mt-0.5">&#10003;</span>
+                    <span><strong>Seleksi Mitra Ketat:</strong> Pemeriksaan identitas KTP dan persetujuan Admin sebelum menerima layanan.</span>
+                  </div>
+                  <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-[#e2e8f0]">
+                    <span class="text-[#10b981] font-extrabold mt-0.5">&#10003;</span>
+                    <span><strong>Progres Terpantau:</strong> Status layanan dapat diikuti dari konfirmasi hingga selesai dikerjakan.</span>
+                  </div>
+                  <div class="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-[#e2e8f0]">
+                    <span class="text-[#10b981] font-extrabold mt-0.5">&#10003;</span>
+                    <span><strong>Garansi Pengerjaan:</strong> Perlindungan pengerjaan ulang apabila hasil kerja belum sesuai standar layanan.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. KATALOG LAYANAN INTI INTERAKTIF + INDIKATOR SELEKSI -->
+    <section id="layanan-inti" class="py-16 sm:py-20 bg-white border-b border-[#e2e8f0] scroll-mt-20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-7">
+          <div>
+            <span class="inline-block px-3.5 py-1 rounded-full bg-[#f4f8ff] border border-blue-200 text-[#1a66ff] text-xs font-extrabold uppercase tracking-wider mb-2.5">
+              Katalog Core Offer
+            </span>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0f172a] tracking-tight">
+              Daftar Layanan Inti &amp; <span class="marker-gold">Estimasi Tarif Dasar</span>
+            </h2>
+            <p class="mt-2 text-sm sm:text-base text-slate-600">
+              Gunakan tab kategori di bawah untuk menyaring layanan dan klik kartu paket untuk memperbarui indikator pilihan layanan inti.
+            </p>
+          </div>
+          <span id="catalog-count-text" class="text-xs font-bold text-slate-500">
+            Menampilkan 8 layanan inti
+          </span>
+        </div>
+
+        <!-- Tab Filter Kategori (Semua, Perawatan & Kebersihan, Perbaikan Teknis, Rumah & Taman) -->
+        <div class="flex flex-wrap items-center gap-2 mb-6" role="tablist" aria-label="Filter Kategori Layanan Inti">
+          <button
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-tab="Semua"
+            class="core-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-[#1a66ff] text-white border border-[#1a66ff] shadow-2xs transition cursor-pointer"
+          >
+            Semua
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="Perawatan & Kebersihan"
+            class="core-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#f4f8ff] text-[#0f172a] border border-[#e2e8f0] hover:border-[#1a66ff] transition cursor-pointer"
+          >
+            Perawatan &amp; Kebersihan
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="Perbaikan Teknis"
+            class="core-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#f4f8ff] text-[#0f172a] border border-[#e2e8f0] hover:border-[#1a66ff] transition cursor-pointer"
+          >
+            Perbaikan Teknis
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="Rumah & Taman"
+            class="core-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#f4f8ff] text-[#0f172a] border border-[#e2e8f0] hover:border-[#1a66ff] transition cursor-pointer"
+          >
+            Rumah &amp; Taman
+          </button>
+        </div>
+
+        <!-- Indikator Pilihan Layanan Inti & Estimasi Harga Dasar (Tanpa Form Jadwal / Modal) -->
+        <div
+          id="selected-service-indicator"
+          aria-live="polite"
+          class="mb-8 rounded-2xl bg-[#f4f8ff] border-2 border-[#1a66ff]/30 p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs"
+        >
+          <div class="flex items-start sm:items-center gap-3.5">
+            <span class="w-10 h-10 rounded-xl bg-[#1a66ff] text-white font-extrabold text-xs flex items-center justify-center shrink-0">
+              PILIHAN
+            </span>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span id="indicator-category-pill" class="px-2.5 py-0.5 rounded-full bg-white border border-blue-200 text-[#1a66ff] text-[11px] font-extrabold">
+                  Perawatan &amp; Kebersihan
+                </span>
+                <span class="text-[11px] font-bold text-[#10b981]">
+                  &#10003; Layanan Inti Terpilih
+                </span>
+              </div>
+              <h3 id="indicator-service-name" class="text-base sm:text-lg font-extrabold text-[#0f172a] mt-1">
+                Cuci AC Split
+              </h3>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-blue-200/70">
+            <div class="md:text-right">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+                Estimasi Harga Dasar
+              </span>
+              <span id="indicator-base-price" class="text-lg sm:text-xl font-extrabold text-[#0f172a]">
+                Mulai Rp 75.000/unit
+              </span>
+            </div>
+            <a
+              href="#profit-maximizer.html"
+              class="px-4 py-2.5 rounded-xl bg-[#facc15] hover:bg-[#eab308] text-[#0f172a] font-extrabold text-xs transition shrink-0"
+            >
+              Paket Rutin Bulanan &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Grid Kartu Layanan Inti -->
+        <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- 1. Cuci AC Split -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="ac-split"
+            data-group="Perawatan & Kebersihan"
+            aria-pressed="true"
+            class="core-card rounded-3xl bg-white border-2 border-[#1a66ff] ring-4 ring-blue-500/10 p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-[#f4f8ff] text-[#1a66ff] text-[11px] font-extrabold">
+                  Perawatan &amp; Kebersihan
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                Cuci AC Split
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#1a66ff]">Mulai Rp 75.000/unit</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Cuci filter, unit indoor &amp; outdoor standar (0,5–2 PK).</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Cek aliran air &amp; kondisi awal pendinginan.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-extrabold text-[#1a66ff] card-indicator">
+              &#10003; Dipilih di Indikator
+            </div>
+          </article>
+
+          <!-- 2. General Cleaning -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="general-cleaning"
+            data-group="Perawatan & Kebersihan"
+            aria-pressed="false"
+            class="core-card rounded-3xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-[#f4f8ff] text-[#1a66ff] text-[11px] font-extrabold">
+                  Perawatan &amp; Kebersihan
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                General Cleaning
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#0f172a]">Mulai Rp 120.000</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Sapu, pel lantai, lap debu furnitur &amp; area utama.</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Pembersihan ruang tamu, kamar tidur &amp; kamar mandi.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator">
+              Klik untuk pilih layanan
+            </div>
+          </article>
+
+          <!-- 3. Perbaikan Pipa & Kran Bocor -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="pipa-bocor"
+            data-group="Perbaikan Teknis"
+            aria-pressed="false"
+            class="core-card rounded-3xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-amber-50 text-[#0f172a] border border-amber-200 text-[11px] font-extrabold">
+                  Perbaikan Teknis
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                Perbaikan Pipa &amp; Kran Bocor
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#0f172a]">Mulai Rp 95.000/titik</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Cek &amp; perbaiki kebocoran kran, seal, atau sambungan pipa.</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Biaya sparepart pengganti diinformasikan sebelum dikerjakan.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator">
+              Klik untuk pilih layanan
+            </div>
+          </article>
+
+          <!-- 4. Pelancaran Pipa Mampet -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="pipa-mampet"
+            data-group="Perbaikan Teknis"
+            aria-pressed="false"
+            class="core-card rounded-3xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-amber-50 text-[#0f172a] border border-amber-200 text-[11px] font-extrabold">
+                  Perbaikan Teknis
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                Pelancaran Pipa Mampet
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#0f172a]">Mulai Rp 150.000/titik</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Pembersihan sumbatan ringan wastafel atau saluran pembuangan.</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Uji kelancaran aliran air setelah pembersihan selesai.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator">
+              Klik untuk pilih layanan
+            </div>
+          </article>
+
+          <!-- 5. Pertukangan & Perbaikan Ringan -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="pertukangan-ringan"
+            data-group="Perbaikan Teknis"
+            aria-pressed="false"
+            class="core-card rounded-3xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-amber-50 text-[#0f172a] border border-amber-200 text-[11px] font-extrabold">
+                  Perbaikan Teknis
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                Pertukangan &amp; Perbaikan Ringan
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#0f172a]">Mulai Rp 125.000</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Perbaikan engsel pintu/jendela, kunci, dan rak dinding.</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Penyesuaian komponen ringan agar fungsi hunian nyaman.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator">
+              Klik untuk pilih layanan
+            </div>
+          </article>
+
+          <!-- 6. Kelistrikan & Lampu -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="kelistrikan-lampu"
+            data-group="Perbaikan Teknis"
+            aria-pressed="false"
+            class="core-card rounded-3xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-amber-50 text-[#0f172a] border border-amber-200 text-[11px] font-extrabold">
+                  Perbaikan Teknis
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                Kelistrikan &amp; Lampu
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#0f172a]">Mulai Rp 90.000</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Pemasangan/penggantian lampu, sakelar, dan stopkontak.</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Pemeriksaan keamanan titik sambungan listrik rumah.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator">
+              Klik untuk pilih layanan
+            </div>
+          </article>
+
+          <!-- 7. Cuci Sofa & Kasur -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="cuci-sofa-kasur"
+            data-group="Rumah & Taman"
+            aria-pressed="false"
+            class="core-card rounded-3xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-[#f4f8ff] text-[#0f172a] border border-blue-200 text-[11px] font-extrabold">
+                  Rumah &amp; Taman
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                Cuci Sofa &amp; Kasur
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#0f172a]">Mulai Rp 140.000</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Pembersihan noda, debu, dan alergen pada sofa atau kasur.</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Membantu menjaga kenyamanan ruang keluarga &amp; kamar tidur.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator">
+              Klik untuk pilih layanan
+            </div>
+          </article>
+
+          <!-- 8. Perawatan Taman -->
+          <article
+            role="button"
+            tabindex="0"
+            data-service-key="perawatan-taman"
+            data-group="Rumah & Taman"
+            aria-pressed="false"
+            class="core-card rounded-3xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] p-5 shadow-card flex flex-col justify-between cursor-pointer transition text-left"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-[#f4f8ff] text-[#0f172a] border border-blue-200 text-[11px] font-extrabold">
+                  Rumah &amp; Taman
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-[#10b981] border border-emerald-200 text-[10px] font-extrabold">
+                  Terverifikasi
+                </span>
+              </div>
+              <h3 class="text-base font-extrabold text-[#0f172a]">
+                Perawatan Taman
+              </h3>
+              <div class="mt-3 pb-3 border-b border-slate-100">
+                <span class="text-lg font-extrabold text-[#0f172a]">Mulai Rp 110.000</span>
+              </div>
+              <ul class="mt-3 space-y-1.5 text-xs text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Pemangkasan tanaman hias, perapihan rumput &amp; daun kering.</span>
+                </li>
+                <li class="flex items-start gap-1.5">
+                  <span class="text-[#10b981] font-bold">&#10003;</span>
+                  <span>Menjaga halaman rumah tampak rapi dan asri.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator">
+              Klik untuk pilih layanan
+            </div>
+          </article>
+        </div>
+
+        <!-- Informasi Tambahan Tripwire & Profit Maximizer -->
+        <div id="tripwire-info" class="mt-10 rounded-3xl bg-[#f4f8ff] border border-[#e2e8f0] p-6 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+          <div>
+            <span class="inline-block px-3 py-0.5 rounded-full bg-white border border-blue-200 text-[#1a66ff] text-[11px] font-extrabold uppercase">
+              Opsi Penawaran Lanjutan
+            </span>
+            <h3 class="text-lg sm:text-xl font-extrabold text-[#0f172a] mt-1.5">
+              Baru Mencoba SIPJasa atau Butuh Perawatan Rutin Tiap Bulan?
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">
+              Manfaatkan penawaran percobaan awal (Tripwire) untuk kunjungan perdana atau paket berlangganan bulanan (Profit Maximizer) untuk efisiensi pemeliharaan jangka panjang.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+            <a
+              href="tripwire.html"
+              class="px-4 py-3 rounded-xl bg-white border border-[#e2e8f0] hover:border-[#1a66ff] text-[#0f172a] font-extrabold text-xs sm:text-sm transition"
+            >
+              Halaman Tripwire
+            </a>
+            <a
+              href="#profit-maximizer.html"
+              class="px-5 py-3 rounded-xl bg-[#1a66ff] hover:bg-[#004ce6] text-white font-extrabold text-xs sm:text-sm transition"
+            >
+              Ke Profit Maximizer &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TIGA LANGKAH PRAKTIS & KEUNGGULAN + BANNER REKRUTMEN MITRA -->
+    <section id="cara-kerja" class="py-16 sm:py-20 bg-[#f4f8ff] border-b border-[#e2e8f0] scroll-mt-20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-10">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-[#0f172a] text-white text-xs font-extrabold uppercase tracking-wider mb-3">
+            3 Langkah Praktis
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0f172a]">
+            Bagaimana Layanan Inti <span class="marker-gold">SIPJasa</span> Bekerja?
+          </h2>
+          <p class="mt-2 text-sm sm:text-base text-slate-600">
+            Alur yang jelas dan terukur untuk memberikan rasa aman serta transparansi biaya pada setiap layanan rumah tangga.
+          </p>
+        </div>
+
+        <div id="keunggulan" class="grid grid-cols-1 md:grid-cols-3 gap-6 scroll-mt-24">
+          <!-- 01 -->
+          <div class="rounded-3xl bg-white border border-[#e2e8f0] p-6 sm:p-7 shadow-card">
+            <span class="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-[#0f172a] text-[#facc15] font-extrabold text-sm mb-4">
+              01
+            </span>
+            <h3 class="text-lg font-extrabold text-[#0f172a]">
+              01 Pilih Layanan &amp; Cek Tarif
+            </h3>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Pilih kategori layanan yang dibutuhkan dan tinjau estimasi tarif dasar mulai yang transparan sebelum pekerjaan berlangsung.
+            </p>
+          </div>
+
+          <!-- 02 -->
+          <div class="rounded-3xl bg-white border border-[#e2e8f0] p-6 sm:p-7 shadow-card">
+            <span class="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-[#1a66ff] text-white font-extrabold text-sm mb-4">
+              02
+            </span>
+            <h3 class="text-lg font-extrabold text-[#0f172a]">
+              02 Mitra Terverifikasi Datang &amp; Kerjakan
+            </h3>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Mitra yang identitas KTP dan layanannya telah diverifikasi Admin SIPJasa datang dan mengerjakan sesuai cakupan yang disepakati.
+            </p>
+          </div>
+
+          <!-- 03 -->
+          <div class="rounded-3xl bg-white border border-[#e2e8f0] p-6 sm:p-7 shadow-card">
+            <span class="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-[#10b981] text-white font-extrabold text-sm mb-4">
+              03
+            </span>
+            <h3 class="text-lg font-extrabold text-[#0f172a]">
+              03 Hasil Terpantau &amp; Transparan
+            </h3>
+            <p class="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Setiap biaya tambahan di luar cakupan standar diinformasikan lebih dulu, dan hasil pengerjaan dapat dipantau hingga selesai.
+            </p>
+          </div>
+        </div>
+
+        <!-- Banner Rekrutmen Mitra -->
+        <div class="mt-12 rounded-3xl bg-[#0f172a] text-white p-7 sm:p-10 shadow-soft border border-slate-800">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div class="lg:col-span-8">
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#facc15] text-[#0f172a] text-xs font-extrabold uppercase mb-3">
+                Kemitraan Penyedia Jasa
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-snug">
+                Punya Keahlian Jasa? Bergabung Menjadi Mitra Terverifikasi SIPJasa
+              </h2>
+              <p class="mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+                Perluas jangkauan pelanggan rumah tangga di area Anda dengan proses verifikasi identitas oleh Admin SIPJasa, katalog layanan terstruktur, dan sistem kerja yang jelas.
+              </p>
+            </div>
+            <div class="lg:col-span-4 lg:text-right">
+              <a
+                href="#faq"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#facc15] hover:bg-[#eab308] text-[#0f172a] font-extrabold text-xs sm:text-sm transition w-full lg:w-auto"
+              >
+                <span>Pelajari Standar Mitra &amp; FAQ</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. AKORDION FAQ (<details>/<summary>) -->
+    <section id="faq" class="py-16 sm:py-20 bg-white scroll-mt-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-[#f4f8ff] border border-blue-200 text-[#1a66ff] text-xs font-extrabold uppercase tracking-wider mb-2.5">
+            Pertanyaan Umum
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0f172a]">
+            FAQ Seputar Verifikasi Mitra, Tarif &amp; Garansi
+          </h2>
+          <p class="mt-2 text-sm sm:text-base text-slate-600">
+            Jawaban ringkas mengenai keamanan kunjungan, transparansi sparepart/freon, dan jaminan pengerjaan SIPJasa.
+          </p>
+        </div>
+
+        <div class="space-y-3.5">
+          <!-- FAQ 1 -->
+          <details class="group rounded-2xl bg-white border border-[#e2e8f0] open:border-[#1a66ff] shadow-2xs transition" open>
+            <summary class="list-none p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer select-none">
+              <span class="text-sm sm:text-base font-extrabold text-[#0f172a]">
+                Bagaimana proses verifikasi KTP dan persetujuan teknisi/mitra di SIPJasa?
+              </span>
+              <svg class="w-5 h-5 text-[#1a66ff] shrink-0 faq-chevron transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+              Setiap calon mitra wajib melengkapi data profil dan unggah identitas KTP untuk diperiksa oleh Admin SIPJasa. Hanya mitra yang telah lolos verifikasi KTP dan mendapatkan persetujuan Admin yang dapat melayani pesanan layanan rumah tangga.
+            </div>
+          </details>
+
+          <!-- FAQ 2 -->
+          <details class="group rounded-2xl bg-white border border-[#e2e8f0] open:border-[#1a66ff] shadow-2xs transition">
+            <summary class="list-none p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer select-none">
+              <span class="text-sm sm:text-base font-extrabold text-[#0f172a]">
+                Apakah tarif sudah termasuk sparepart, isi freon AC, atau material tambahan?
+              </span>
+              <svg class="w-5 h-5 text-[#1a66ff] shrink-0 faq-chevron transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+              Tarif yang tercantum pada katalog adalah estimasi harga dasar untuk cakupan layanan standar. Apabila saat pemeriksaan ditemukan kebutuhan sparepart, isi freon, atau pengerjaan tambahan di luar paket dasar, estimasi biayanya akan diinformasikan terlebih dahulu sebelum dikerjakan.
+            </div>
+          </details>
+
+          <!-- FAQ 3 -->
+          <details class="group rounded-2xl bg-white border border-[#e2e8f0] open:border-[#1a66ff] shadow-2xs transition">
+            <summary class="list-none p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer select-none">
+              <span class="text-sm sm:text-base font-extrabold text-[#0f172a]">
+                Bagaimana jaminan pengerjaan jika hasil layanan belum sesuai standar?
+              </span>
+              <svg class="w-5 h-5 text-[#1a66ff] shrink-0 faq-chevron transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+              SIPJasa menyediakan garansi pengerjaan ulang sesuai cakupan layanan yang disepakati apabila hasil pekerjaan tidak memenuhi standar layanan atau terdapat keluhan yang dapat diverifikasi.
+            </div>
+          </details>
+
+          <!-- FAQ 4 -->
+          <details class="group rounded-2xl bg-white border border-[#e2e8f0] open:border-[#1a66ff] shadow-2xs transition">
+            <summary class="list-none p-5 sm:p-6 flex items-center justify-between gap-4 cursor-pointer select-none">
+              <span class="text-sm sm:text-base font-extrabold text-[#0f172a]">
+                Bagaimana perbedaan Core Offer, Tripwire, dan Profit Maximizer di SIPJasa?
+              </span>
+              <svg class="w-5 h-5 text-[#1a66ff] shrink-0 faq-chevron transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-5 sm:px-6 pb-5 sm:pb-6 pt-0 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+              Core Offer menampilkan layanan inti reguler dengan tarif dasar yang jelas; Tripwire ditujukan untuk penawaran percobaan awal bagi pengguna baru; sedangkan Profit Maximizer menghadirkan paket berlangganan bulanan rutin dengan nilai bundling yang lebih hemat.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER BERSIH -->
+  <footer class="bg-[#f4f8ff] border-t border-[#e2e8f0] py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-slate-600">
+      <div class="flex items-center gap-2.5">
+        <span class="font-extrabold text-base">
+          <span class="text-[#0f172a]">SIP</span><span class="text-[#1a66ff]">Jasa</span>
+        </span>
+        <span class="text-slate-300">|</span>
+        <span>Sistem Informasi Pemesanan Jasa Rumah Tangga</span>
+      </div>
+      <p class="font-medium text-slate-600">
+        &copy; 2026 SIPJasa. Hubungkan Kebutuhan, Temukan Solusinya.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Data layanan inti untuk memperbarui indikator pilihan layanan & estimasi harga dasar
+    const coreServicesMap = {
+      'ac-split': {
+        name: 'Cuci AC Split',
+        group: 'Perawatan & Kebersihan',
+        price: 'Mulai Rp 75.000/unit'
+      },
+      'general-cleaning': {
+        name: 'General Cleaning',
+        group: 'Perawatan & Kebersihan',
+        price: 'Mulai Rp 120.000'
+      },
+      'pipa-bocor': {
+        name: 'Perbaikan Pipa & Kran Bocor',
+        group: 'Perbaikan Teknis',
+        price: 'Mulai Rp 95.000/titik'
+      },
+      'pipa-mampet': {
+        name: 'Pelancaran Pipa Mampet',
+        group: 'Perbaikan Teknis',
+        price: 'Mulai Rp 150.000/titik'
+      },
+      'pertukangan-ringan': {
+        name: 'Pertukangan & Perbaikan Ringan',
+        group: 'Perbaikan Teknis',
+        price: 'Mulai Rp 125.000'
+      },
+      'kelistrikan-lampu': {
+        name: 'Kelistrikan & Lampu',
+        group: 'Perbaikan Teknis',
+        price: 'Mulai Rp 90.000'
+      },
+      'cuci-sofa-kasur': {
+        name: 'Cuci Sofa & Kasur',
+        group: 'Rumah & Taman',
+        price: 'Mulai Rp 140.000'
+      },
+      'perawatan-taman': {
+        name: 'Perawatan Taman',
+        group: 'Rumah & Taman',
+        price: 'Mulai Rp 110.000'
+      }
+    };
+
+    const tabButtons = document.querySelectorAll('.core-tab-btn');
+    const coreCards = document.querySelectorAll('.core-card');
+    const catalogCountText = document.getElementById('catalog-count-text');
+
+    const indicatorCategoryPill = document.getElementById('indicator-category-pill');
+    const indicatorServiceName = document.getElementById('indicator-service-name');
+    const indicatorBasePrice = document.getElementById('indicator-base-price');
+
+    let selectedServiceKey = 'ac-split';
+
+    function updateIndicator(key) {
+      const data = coreServicesMap[key];
+      if (!data) return;
+
+      selectedServiceKey = key;
+
+      if (indicatorCategoryPill) indicatorCategoryPill.textContent = data.group;
+      if (indicatorServiceName) indicatorServiceName.textContent = data.name;
+      if (indicatorBasePrice) indicatorBasePrice.textContent = data.price;
+
+      coreCards.forEach((card) => {
+        const isSelected = card.getAttribute('data-service-key') === key;
+        const indicatorEl = card.querySelector('.card-indicator');
+        card.setAttribute('aria-pressed', String(isSelected));
+
+        if (isSelected) {
+          card.classList.remove('border', 'border-[#e2e8f0]', 'hover:border-[#1a66ff]');
+          card.classList.add('border-2', 'border-[#1a66ff]', 'ring-4', 'ring-blue-500/10');
+          if (indicatorEl) {
+            indicatorEl.textContent = '✓ Dipilih di Indikator';
+            indicatorEl.className = 'mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-extrabold text-[#1a66ff] card-indicator';
+          }
+        } else {
+          card.classList.remove('border-2', 'border-[#1a66ff]', 'ring-4', 'ring-blue-500/10');
+          card.classList.add('border', 'border-[#e2e8f0]', 'hover:border-[#1a66ff]');
+          if (indicatorEl) {
+            indicatorEl.textContent = 'Klik untuk pilih layanan';
+            indicatorEl.className = 'mt-4 pt-2.5 border-t border-slate-100 text-[11px] font-semibold text-slate-500 card-indicator';
+          }
+        }
+      });
+    }
+
+    // Interaksi filter tab kategori
+    tabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const activeTab = btn.getAttribute('data-tab');
+        let visibleCards = 0;
+
+        tabButtons.forEach((b) => {
+          const isCurrentTab = b === btn;
+          b.setAttribute('aria-selected', String(isCurrentTab));
+          if (isCurrentTab) {
+            b.className = 'core-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-[#1a66ff] text-white border border-[#1a66ff] shadow-2xs transition cursor-pointer';
+          } else {
+            b.className = 'core-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#f4f8ff] text-[#0f172a] border border-[#e2e8f0] hover:border-[#1a66ff] transition cursor-pointer';
+          }
+        });
+
+        coreCards.forEach((card) => {
+          const cardGroup = card.getAttribute('data-group');
+          const matches = activeTab === 'Semua' || cardGroup === activeTab;
+          if (matches) {
+            card.classList.remove('hidden');
+            visibleCards += 1;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        if (catalogCountText) {
+          catalogCountText.textContent =
+            activeTab === 'Semua'
+              ? `Menampilkan ${visibleCards} layanan inti`
+              : `Menampilkan ${visibleCards} layanan pada "${activeTab}"`;
+        }
+      });
+    });
+
+    // Interaksi klik / keyboard pada kartu layanan inti
+    coreCards.forEach((card) => {
+      const handleCardSelect = () => {
+        const key = card.getAttribute('data-service-key');
+        if (key) updateIndicator(key);
+      };
+
+      card.addEventListener('click', handleCardSelect);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardSelect();
+        }
+      });
+    });
+
+    // Inisialisasi indikator awal
+    updateIndicator(selectedServiceKey);
+  </script>
+</body>
+</html>
